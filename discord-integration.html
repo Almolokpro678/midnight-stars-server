@@ -328,39 +328,55 @@
             
             container.innerHTML = chatHTML;
             
-            // Add chat functionality
-            const chatInput = document.getElementById('chat-input');
-            const chatSend = document.getElementById('chat-send');
-            const chatDisplay = document.getElementById('chat-display');
-            
-            function sendMessage() {
-                const message = chatInput.value.trim();
-                if (!message) return;
-                
-                // Add message to chat display
-                const messageHTML = `
-                    <div class="discord-message">
-                        <div class="discord-avatar">👤</div>
-                        <div class="discord-content">
-                            <div class="discord-username">Website User</div>
-                            <div class="discord-text">${message}</div>
-                        </div>
-                        <div class="discord-timestamp">just now</div>
-                    </div>
-                `;
-                
-                chatDisplay.insertAdjacentHTML('beforeend', messageHTML);
-                chatDisplay.scrollTop = chatDisplay.scrollHeight;
-                chatInput.value = '';
-                
-                // Send to Discord via webhook (you'll need to set this up)
-                sendToDiscord(message);
-            }
-            
-            chatSend.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
+            // Add chat functionality with error handling
+            setTimeout(() => {
+                try {
+                    const chatInput = document.getElementById('chat-input');
+                    const chatSend = document.getElementById('chat-send');
+                    const chatDisplay = document.getElementById('chat-display');
+                    
+                    if (!chatInput || !chatSend || !chatDisplay) {
+                        console.error('Chat elements not found');
+                        return;
+                    }
+                    
+                    function sendMessage() {
+                        const message = chatInput.value.trim();
+                        if (!message) return;
+                        
+                        console.log('Sending message:', message);
+                        
+                        // Add message to chat display
+                        const messageHTML = `
+                            <div class="discord-message">
+                                <div class="discord-avatar">👤</div>
+                                <div class="discord-content">
+                                    <div class="discord-username">Website User</div>
+                                    <div class="discord-text">${message}</div>
+                                </div>
+                                <div class="discord-timestamp">just now</div>
+                            </div>
+                        `;
+                        
+                        chatDisplay.insertAdjacentHTML('beforeend', messageHTML);
+                        chatDisplay.scrollTop = chatDisplay.scrollHeight;
+                        chatInput.value = '';
+                        
+                        // Send to Discord via webhook
+                        sendToDiscord(message);
+                    }
+                    
+                    // Add event listeners
+                    chatSend.addEventListener('click', sendMessage);
+                    chatInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') sendMessage();
+                    });
+                    
+                    console.log('Chat event listeners added successfully');
+                } catch (error) {
+                    console.error('Error setting up chat:', error);
+                }
+            }, 100);
         }
 
         function sendToDiscord(message) {
@@ -388,9 +404,21 @@
             });
         }
 
-        // Initialize
+        // Initialize with debugging
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Discord integration page loaded');
             createStars();
+            
+            // Test button functionality
+            const buttons = document.querySelectorAll('.option-button');
+            console.log('Found buttons:', buttons.length);
+            
+            buttons.forEach((button, index) => {
+                console.log(`Button ${index}:`, button.textContent);
+                button.addEventListener('click', () => {
+                    console.log(`Button clicked: ${button.textContent}`);
+                });
+            });
         });
     </script>
 </body>
