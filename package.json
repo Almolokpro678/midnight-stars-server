@@ -1,0 +1,17 @@
+{
+  "name": "midnight-stars-discord-bridge",
+  "version": "1.0.0",
+  "description": "Real-time Discord chat bridge for Midnight Stars website",
+  "main": "discord-bot.js",
+  "scripts": {
+    "start": "node discord-bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4"
+  },
+  "keywords": ["discord", "chat", "bridge", "midnight-stars"],
+  "author": "Midnight Stars",
+  "license": "MIT"
+}
